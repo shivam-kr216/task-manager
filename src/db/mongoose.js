@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-const User = require('../models/user');
 
 //In mongoose we are providing database name alsng with connection URL
 const connectionURL = 'mongodb://127.0.0.1:27017/task-manager-api';
 mongoose.connect(connectionURL, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    //NOT NECESSARY ONLY TO REMOVE DEPRECATION WARNINGS
+    useFindAndModify: false
 })
 
 //const me = new User({
