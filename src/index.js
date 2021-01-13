@@ -11,18 +11,36 @@ app.use(express.json());
 //Defining user route which is on other page 
 app.use(userRouter);
 app.use(taskRouter);
+//Express middleware
+
 
 app.listen(port, () => {
     console.log('Connected!');
 })
 
-const bcrypt = require('bcryptjs');
+//Just for example
+/*const bcrypt = require('bcryptjs');
 
 const myFunction = async () => {
     const hashedPassword = await bcrypt.hash('Shivam',8);
     console.log(hashedPassword);
     const isMatch = await bcrypt.compare('shivam',hashedPassword);
     console.log(isMatch);
+}
+
+myFunction();*/
+
+const jwt = require('jsonwebtoken');
+
+const myFunction = async () => {
+    //it require two arguments first one will be the unique id 
+    //second is any stream of characters which is a signature
+    //third argument will be time expired
+    const token = jwt.sign({_id: 'abc123'}, 'thisisnodetutorial', {expiresIn: '7 days'});
+    console.log(token);
+
+    const data = jwt.verify(token, 'thisisnodetutorial');
+    console.log(data)
 }
 
 myFunction();
