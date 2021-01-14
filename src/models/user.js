@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema({
 });
 
 //We can name the function anything i.e, findByCredentials
+//statics are model method
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
     if(!user){
@@ -80,5 +81,4 @@ userSchema.pre('save', async function(next){
 })
 
 const User = mongoose.model('Users', userSchema);
-
 module.exports = User;
