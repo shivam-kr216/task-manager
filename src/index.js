@@ -6,12 +6,14 @@ const taskRouter = require('./router/task');
 const app = express(); 
 //process.env.PORT is for connecting to HEROKU server
 const port = process.env.PORT || 3000
+
+
 //Automatically parse json data into object
 app.use(express.json());
 //Defining user route which is on other page 
 app.use(userRouter);
 app.use(taskRouter);
-//Express middleware
+
 
 
 app.listen(port, () => {
@@ -30,7 +32,7 @@ const myFunction = async () => {
 
 myFunction();*/
 
-const jwt = require('jsonwebtoken');
+/*const jwt = require('jsonwebtoken');
 
 const myFunction = async () => {
     //it require two arguments first one will be the unique id 
@@ -43,4 +45,4 @@ const myFunction = async () => {
     console.log(data)
 }
 
-myFunction();
+myFunction();*/

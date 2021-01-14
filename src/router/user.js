@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const express = require('express')
 const User = require('../models/user');
-const router = new express.Router()
+//We acquiring middleware here because we want to use middleware for some specific route
+const auth = require('../middleware/auth');
+const router = new express.Router();
 
 router.post('/users', async (req, res) => {
     //    const user = new User(req.body)
@@ -32,13 +34,18 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
-router.get('/users', async (req, res) => {
+router.get('/users/me', auth, async (req, res) => {
+    res.send(req.user);
+
+    /*
     try {
         const user = await User.find({})
         res.send(user);
     } catch (e) {
         res.status(500).send();
     }
+    */
+
     //    User.find({}).then((users)=>{
     //        res.send(users);
     //    }).catch((e)=>{
