@@ -46,3 +46,11 @@ const myFunction = async () => {
 }
 
 myFunction();*/
+
+/*
+const pet = {
+    name: 'Hal'
+}
+console.log(JSON.stringify(pet));
+console.log(typeof(pet));
+*/

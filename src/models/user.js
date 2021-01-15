@@ -55,6 +55,25 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user;
 }
 
+/*userSchema.methods.getPublicProfile = function () {
+    const user = this;
+    const userObject = user.toObject();      
+    delete userObject.tokens;
+    delete userObject.password;
+    return userObject;
+}*/
+
+//It will as similar to above function because
+//whenever response call it call to stringyfy function which 
+//convert object to json format
+userSchema.methods.ToJSON = function () {
+    const user = this;
+    const userObject = user.toObject();      
+    delete userObject.tokens;
+    delete userObject.password;
+    return userObject;
+}
+
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
     //it require two arguments first one will be the unique id 
