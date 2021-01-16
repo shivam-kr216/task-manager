@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const taskSchema = new mongoose.Schema()
-const Task = mongoose.model('Tasks', {
+const taskSchema = new mongoose.Schema({
     description: {
         type: String,
         //required: [true, 'Why no description?']
@@ -11,12 +10,23 @@ const Task = mongoose.model('Tasks', {
     completed: {
         type: Boolean,
         default: false,
-        validate(value){
-            if(value < 0){
+        validate(value) {
+            if (value < 0) {
                 throw new Error('Age must be a positive number');
             }
         }
-    } 
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        //Collection name
+        ref: 'Users'
+    }
+}, 
+{
+    timestamps: true
 })
+
+const Task = mongoose.model('Tasks', taskSchema);
 
 module.exports = Task;
