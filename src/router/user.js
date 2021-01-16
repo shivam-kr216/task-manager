@@ -79,6 +79,7 @@ router.get('/users/me', auth, async (req, res) => {
 
 })
 
+/*
 router.get('/users/:id', async (req, res) => {
     try {
         const _id = req.params.id;
@@ -101,9 +102,12 @@ router.get('/users/:id', async (req, res) => {
     //   })
 
 })
+*/
 
+/*
 router.patch('/users/:id', async (req, res) => {
     const updates = Object.keys(req.body);
+    //console.log(updates);
     const allowedUpdates = ['name', 'email', 'password', 'age'];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
@@ -125,9 +129,38 @@ router.patch('/users/:id', async (req, res) => {
     } catch (e) {
         res.status(400).send(e);
     }
-}) 
+})
+*/
 
-router.delete('/users/:id', async (req, res) => {
+
+router.patch('/users/me', auth, async (req, res) => {
+    const updates = Object.keys(req.body);
+    //console.log(updates);
+    const allowedUpdates = ['name', 'email', 'password', 'age'];
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+
+    if (!isValidOperation) {
+        return res.status(404).send({ error: 'Invalid updates!' });
+    }
+ 
+    try {
+        //const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        //const user = await User.findById(req.params.id)
+        updates.forEach((update) => {
+            req.user[update]=req.body[update]
+        })
+        await req.user.save()
+
+        res.send(req.user)
+    } catch (e) {
+        res.status(400).send(e);
+    }
+})
+
+
+
+/*
+router.delete('/users/:id', auth, async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user)
@@ -137,8 +170,19 @@ router.delete('/users/:id', async (req, res) => {
         res.status(500).send();
     }
 })
+*/
 
-
+router.delete('/users/me', auth, async (req, res) => {
+    try {
+        //Either this way 
+        //const user = await User.findByIdAndDelete(req.user._id);
+        //or
+        await req.user.remove(); 
+        res.send(req.user);
+    } catch (e) {
+        res.status(500).send();
+    }
+})
 
 module.exports = router;
 

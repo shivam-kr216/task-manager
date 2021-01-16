@@ -54,3 +54,21 @@ const pet = {
 console.log(JSON.stringify(pet));
 console.log(typeof(pet));
 */
+
+/*
+const Task = require ('./models/task');
+const User = require('./models/user');
+
+const main = async () => {
+    //const task = await Task.findById('6001d382f5b2ff4774ada65d');
+    //This line going to find the user associated to this task
+    //await task.populate('owner').execPopulate();
+    //console.log(task.owner);
+
+    const user = await User.findById('6001cf70a1cafa4d40413f49');
+    await user.populate('tasks').execPopulate();
+    console.log(user.tasks);
+}
+
+main();
+*/
