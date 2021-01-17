@@ -7,6 +7,56 @@ const app = express();
 //process.env.PORT is for connecting to HEROKU server
 const port = process.env.PORT || 3000
 
+/*
+const multer = require('multer');
+const upload = multer({
+    dest: 'images',
+    limits: {
+        fileSize: 1000000
+    },
+    //fileFilter is used to restrict the type of file to be uploaded
+    //cb is a callback function which is used to handle error while uploading
+    fileFilter(req, file, cb){
+        
+        //if(!file.originalname.endsWith('.pdf')){
+        //    return cb(new Error('File must be PDF'));
+        //}
+
+        //for cehcking we use regex expression
+        if(!file.originalname.match(/\.(doc|docx)$/)){
+            return cb(new Error('Please upload a word document'));
+        }
+        //It will be called when everything goes well
+        return cb(undefined, true)
+    }
+});
+*/
+
+//const errorMiddleware = (req, res, next) => {
+//    throw new Error('From my middleware!');
+//}
+
+//Second argument is multer middleware
+//Here we are calling middleware provided by multer
+
+/*
+app.post('/upload', upload.single('upload'), (req, res)=>{
+    res.send();
+}, //Here we are handling error thrown by multer 
+(error, req, res, next) => {
+    res.status(400).send({error: error.message});
+})
+*/
+
+
+//Here we are calling our middleware
+/*
+app.post('/upload', errorMiddleware, (req, res)=>{
+    res.send();
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message});
+})
+*/
 
 //Automatically parse json data into object
 app.use(express.json());
@@ -72,3 +122,5 @@ const main = async () => {
 
 main();
 */
+
+//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

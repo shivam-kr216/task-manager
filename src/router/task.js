@@ -36,7 +36,12 @@ taskRoute.get('/tasks', (req, res) => {
 */
 
 //We can filter using query string
+///tasks?completed=true
 //We are using completed as query string
+//Now we are adding pagination using the following:
+///tasks?limit=10&skip=0
+//sorting /task?sordBy=completed:1 (-1 for descending) or we can also use _asc or _desc
+////sorting /task?sordBy=completed_1 (-1 for descending) or we can also use _asc or _desc
 taskRoute.get('/tasks', auth, async (req, res) => {
     //first way
     //const task = await Task.find({ owner: req.user._id, completed: req.query.completed })
@@ -48,17 +53,38 @@ taskRoute.get('/tasks', auth, async (req, res) => {
 
     //second way
     const match = {}
+    const sort = {}
     if(req.query.completed){
         match.completed = req.query.completed === 'true'
     }
+
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(':')
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+        //console.log(sort);
+    }
+
+
     try
     {   //await req.user.populate(tasks).execPopulate();
         //res.send(req.user.tasks);
         //Below line will be for filtering
         //Remove above two line before using this
+        //Here match used for filtering and option used for pagination
         await req.user.populate({
         path: 'tasks',
-        match
+        match,
+        options: {
+            //Query string are always a string we need to parse
+            limit : parseInt(req.query.limit),
+            skip: parseInt(req.query.skip),
+            sort
+            /*sort: {
+                createdAt: -1 //Sort in descending order
+                //We can also sort using completed status
+                //use -1 for true and 1 for false
+            }*/
+        }
     }).execPopulate();
     res.send(req.user.tasks);
     }
